@@ -66,7 +66,8 @@ public class UserDaoJDBCImpl implements UserDao {
             statement.setString(2, lastName);
             statement.setByte(3, age);
             statement.executeUpdate();
-            logger.log(Level.INFO, "Save user [ name={1} lastName={2} age={3} ] done.\n",
+            System.out.printf("User с именем — %s добавлен в базу данных%n", name);
+            logger.log(Level.INFO, "Save user [ name={0} lastName={1} age={2} ] done.\n",
                     new Object[]{name, lastName, age});
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());
@@ -80,7 +81,7 @@ public class UserDaoJDBCImpl implements UserDao {
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, id);
             statement.executeUpdate();
-            logger.log(Level.INFO, "Save user with [ id={1} ] done.\n", new Object[]{id});
+            logger.log(Level.INFO, "Save user with [ id={0} ] done.\n", id);
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());
         }

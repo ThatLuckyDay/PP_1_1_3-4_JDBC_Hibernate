@@ -20,7 +20,7 @@ public class Main {
         logger.log(Level.INFO, "Insert users.");
         for (int i = 0; i < 4; i++) {
             userService.saveUser("name" + i, "lastname" + i, (byte) (i * 10));
-            logger.log(Level.FINE, "Insert user {1}.", 1);
+            logger.log(Level.FINE, "Insert user {1}.", i);
         }
 
         logger.log(Level.INFO, "Get all users.");
