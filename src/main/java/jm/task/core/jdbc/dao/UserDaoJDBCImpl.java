@@ -18,7 +18,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     private Connection connection;
 
-    private final String tableName = "users";
+    private final String tableName = "User";
 
     public UserDaoJDBCImpl() {
         try {
@@ -41,7 +41,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.executeUpdate();
-            logger.log(Level.INFO, "Create table [ users ] done.\n");
+            logger.log(Level.INFO, "Create table [ {0} ] done.\n", tableName);
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());
         }
@@ -52,7 +52,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.executeUpdate();
-            logger.log(Level.INFO, "Drop table [ users ] done.\n");
+            logger.log(Level.INFO, "Drop table [ {0} ] done.\n", tableName);
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());
         }
