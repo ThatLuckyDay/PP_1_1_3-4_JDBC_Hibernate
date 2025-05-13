@@ -79,10 +79,10 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public List<User> getAllUsers() {
-        String query = "SELECT * FROM %s;".formatted(tableName);
+        String hql = "FROM %s".formatted(tableName);
 
         try (Session session = sessionFactory.openSession()) {
-            List<User> result = session.createNativeQuery(query, User.class)
+            List<User> result = session.createQuery(hql, User.class)
                     .getResultList();
             System.out.println(result);
             return result;
@@ -95,8 +95,20 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public void cleanUsersTable() {
-        String query = "TRUNCATE TABLE %s;".formatted(tableName);
-        executeQuery(query);
+        String hql = "DELETE FROM %s".formatted(tableName);
+
+        Transaction transaction = null;
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
+
+            session.createQuery(hql).executeUpdate();
+
+            transaction.commit();
+        } catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        }
     }
 
     private void executeQuery(String sqlQuery) {
